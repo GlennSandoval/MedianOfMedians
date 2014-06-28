@@ -10,7 +10,7 @@ namespace Medians
     public static class Median
     {
 
-        public T FindMedian<T>(IEnumerable<T> list, Comparison<T> compare)
+        public static T FindMedian<T>(IEnumerable<T> list, Comparison<T> compare)
         {
 
             if (list == null || list.Count() == 0)
