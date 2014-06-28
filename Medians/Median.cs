@@ -10,17 +10,18 @@ namespace Medians
     public static class Median
     {
 
-        public static double FindMedian(IEnumerable<double> list)
+        public T FindMedian<T>(IEnumerable<T> list, Comparison<T> compare)
         {
 
             if (list == null || list.Count() == 0)
             {
-                throw new ArgumentException();
+                // Really sholuld provide at least 3 items.
+                throw new ArgumentException("Must provide at least 1 item");
             }
 
             int count = list.Count();
 
-            var right = Select(list, count / 2);
+            var right = Select(list, count / 2, compare);
 
             if (list.Count() % 2 != 0)
             {
@@ -28,50 +29,50 @@ namespace Medians
             }
             else
             {
-                var left = Select(list, (list.Count() / 2) + 1);
-                return (right + left) / 2;
+                var left = Select(list, (list.Count() / 2) + 1, compare);
+                return left;
             }
         }
 
-        static double Select(IEnumerable<double> list, int position)
+        static T Select<T>(IEnumerable<T> list, int position, Comparison<T> compare)
         {
             if (list.Count() < 10)
             {
-                List<double> l = new List<double>(list);
+                var l = new List<T>(list);
                 l.Sort();
-                return l[position-1];
+                return l[position - 1];
             }
 
-            var s = new List<List<double>>();
+            var s = new List<List<T>>();
 
             int partitions = list.Count() / 5;
 
-            List<double> wrapper = new List<double>(list);
+            List<T> wrapper = new List<T>(list);
 
             for (int i = 0; i < partitions; i++)
             {
-                s.Add(new List<double>(wrapper.GetRange(i * 5, 5)));
+                s.Add(new List<T>(wrapper.GetRange(i * 5, 5)));
             }
 
-            List<double> medians = new List<double>();
+            List<T> medians = new List<T>();
 
             foreach (var sl in s)
             {
-                medians.Add(Select(sl, 3));
+                medians.Add(Select(sl, 3, compare));
             }
 
-            double medianOfMedians = Select(medians, list.Count() / 10);
+            var medianOfMedians = Select(medians, list.Count() / 10, compare);
 
-            List<double> l1 = new List<double>();
-            List<double> l3 = new List<double>();
+            List<T> l1 = new List<T>();
+            List<T> l3 = new List<T>();
 
             foreach (var d in list)
             {
-                if (d < medianOfMedians)
+                if (compare(d, medianOfMedians) < 0)
                 {
                     l1.Add(d);
                 }
-                else if (d > medianOfMedians)
+                else
                 {
                     l3.Add(d);
                 }
@@ -79,11 +80,11 @@ namespace Medians
 
             if (position <= l1.Count)
             {
-                return Select(l1, position);
+                return Select(l1, position, compare);
             }
             else if (position > l1.Count + l3.Count)
             {
-                return Select(l3, position - l1.Count - l3.Count);
+                return Select(l3, position - l1.Count - l3.Count, compare);
             }
             else
             {
