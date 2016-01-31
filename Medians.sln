@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medians", "Medians\Medians.csproj", "{2A513AA3-C0C1-4ABB-A78F-3314ECD1FA27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{6958069E-EB0A-454F-9D7A-20233D38F2DD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2A513AA3-C0C1-4ABB-A78F-3314ECD1FA27} = {2A513AA3-C0C1-4ABB-A78F-3314ECD1FA27}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{2A513AA3-C0C1-4ABB-A78F-3314ECD1FA27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A513AA3-C0C1-4ABB-A78F-3314ECD1FA27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A513AA3-C0C1-4ABB-A78F-3314ECD1FA27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6958069E-EB0A-454F-9D7A-20233D38F2DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6958069E-EB0A-454F-9D7A-20233D38F2DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6958069E-EB0A-454F-9D7A-20233D38F2DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6958069E-EB0A-454F-9D7A-20233D38F2DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
