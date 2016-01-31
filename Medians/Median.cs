@@ -93,6 +93,56 @@ namespace Medians
 
         }
 
+        static int FastSelect<T>(T[] list, int lo, int hi, int k) where T: IComparable
+        {
+            int n = hi - lo;
+            if (n < 2)
+                return lo;
+
+            T pivot = list[lo + (k * 7919) % n]; // Pick a random pivot
+
+            // Triage list to [<pivot][=pivot][>pivot]
+            int nLess = 0, nSame = 0, nMore = 0;
+            int lo3 = lo;
+            int hi3 = hi;
+            while (lo3 < hi3)
+            {
+                T e = list[lo3];
+                int cmp = e.CompareTo(pivot);
+                if (cmp < 0)
+                {
+                    nLess++;
+                    lo3++;
+                }
+                else if (cmp > 0)
+                {
+                    list.Swap(lo3, --hi3);
+                    if (nSame > 0)
+                        list.Swap(hi3, hi3 + nSame);
+                    nMore++;
+                }
+                else {
+                    nSame++;
+
+                    list.Swap(lo3, --hi3);
+                }
+            }
+
+            if (k >= n - nMore)
+                return FastSelect(list, hi - nMore, hi, k - nLess - nSame);
+            else if (k < nLess)
+                return FastSelect(list, lo, lo + nLess, k);
+            return lo + k;
+        }
+
+        public static IList<T> Swap<T>(this IList<T> list, int indexA, int indexB)
+        {
+            T tmp = list[indexA];
+            list[indexA] = list[indexB];
+            list[indexB] = tmp;
+            return list;
+        }
+
     }
 
 }
