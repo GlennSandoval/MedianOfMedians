@@ -1,7 +1,7 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Tests
 {
@@ -11,7 +11,7 @@ namespace Tests
         public T NaiveMedian<T>(List<T> values)
         {
             values.Sort();
-            return values[(int)(values.Count / 2)];
+            return values[values.Count / 2];
         }
 
         [TestMethod]
@@ -34,12 +34,12 @@ namespace Tests
 
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            var result = Medians.Median.FindMedian<int>(values, (a, b) => { return a.CompareTo(b); });
+            var result = Medians.Median.FindMedian(values, (a, b) => { return a.CompareTo(b); });
             sw.Stop();
             Debug.WriteLine("Time {0}  Result {1}", sw.Elapsed, result.ToString());
 
             sw.Restart();
-            result = NaiveMedian<int>(values);
+            result = NaiveMedian(values);
             sw.Stop();
             Debug.WriteLine("Time {0}  Result {1}", sw.Elapsed, result.ToString());
         }
